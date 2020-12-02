@@ -20,8 +20,6 @@ def passwordcheck(filename):
         data_char.append(dataset[1][:1])
         data_pass.append(dataset[2])
         data_split.append([dataset_minmax[0], dataset_minmax[1], dataset[1][:1],dataset[2]])
-    print(inputdata[0:3])
-    print(data_split[0:3])
     countgood = 0
     countbad = 0
     count = 0
