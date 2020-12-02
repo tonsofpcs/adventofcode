@@ -26,8 +26,8 @@ def passwordcheck(filename):
     countbad = 0
     count = 0
     for item in data_split:
-        allow_min = item[0]
-        allow_max = item[1]
+        allow_min = int(item[0])
+        allow_max = int(item[1])
         allow_char = item[2]
         checkpass = item[3]
         allow_count = checkpass.count(allow_char)
