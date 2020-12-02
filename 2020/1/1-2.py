@@ -11,7 +11,7 @@ def find2020(filename):
     inputdata3 = inputdata
     for line1 in inputdata:
         for line2 in inputdata2:
-            for line3 in inputdata2:
+            for line3 in inputdata3:
                 if (int(line1) + int(line2) + int(line3) == 2020):
                     print(line1)
                     print(line2)
