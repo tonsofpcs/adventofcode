@@ -4,37 +4,37 @@ print "importing"
 
 inputfile_source = "2020/5/input.txt"
 
-def checkid(idstring):
-    items = idstring.split(" ")
-    if (len(items) < 7): return 0
-    validitem = 0
-    for item in items:
-        caseselect = {
-            "byr": 1,
-            "iyr": 1,
-            "eyr": 1,
-            "hgt": 1,
-            "hcl": 1,
-            "ecl": 1,
-            "pid": 1,
-            "cid": 0
-        }
-        validitem += caseselect.get(item[0:3], 0)
-    return (validitem >= 7)
+def findrow(rowchars):
+    row = 128
+    testrange = 128
+    for c in rowchars:
+        testrange = testrange/2
+        if (c == "F"):
+            row = row - testrange
+    row = row - 1
+    return row
 
+def findcol(colchars):
+    col = 8
+    testrange = 8
+    for c in colchars:
+        testrange = testrange/2
+        if (c == "L"):
+            col = col - testrange
+    col = col - 1
+    return col
 
-def checkfile(filename):
-    validids = 0
+def findid(passchars):
+    return (findrow(passchars[0:7]) * 8 + findcol(passchars[7:10]))
 
+def checkpasses(filename):
+    maxid = 0
     inputfile = open(filename)
-    inputfiledata = inputfile.read()
-    inputdata = inputfiledata.split("\n\n")
+    inputdata = inputfile.readlines()
     for line in inputdata:
-        line = line.replace("\n"," ")
-        print(line)
-        if len(line) == 0:
-            continue
-        validids += checkid(line)
-    return validids
+        seatid = findid(line)
+        if (seatid > maxid):
+            maxid = seatid
+    return maxid
 
-print(checkfile(inputfile_source))
+print(checkpasses(inputfile_source))
