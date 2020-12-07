@@ -3,37 +3,21 @@ import os
 
 print "importing"
 
-inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
+inputfile_source = os.path.dirname(__file__) + "/input.txt"
 
-colors = []
-bags = []
-biggerbags = []
+nothere = []
+validbags = ["shiny gold"]
 
-bagtype = "shiny gold"
-
-def findthing1(testrange):
-    seekvalue = 0
-    for item in testrange:
-        seekvalue = 1
-    return seekvalue
-
-def findthing2(testrange):
-    seekvalue = 0
-    for item in testrange:
-        seekvalue = 1
-    return seekvalue
-
-def findgroup(testgroup):
-    return (findthing1(testgroup[1]) + findthing2(testgroup[2]))
-
-def checkeverything(filename, checkfor):
+def checkeverything(filename):
     inputfile = open(filename)
     inputdata = inputfile.readlines()
+    bags = []
     
     print("Parsing data")
     for line in inputdata:
         line = line.replace("bags","bag").replace(" bag, ", "|").replace(" bag contain no other bag.","").replace(" bag contain ","|").replace(" bag.","").replace("\n","")
         lineitems = line.split("|")
+        colors = []
         bag = []
         for index, item in enumerate(lineitems):
             if index == 0:
@@ -46,12 +30,33 @@ def checkeverything(filename, checkfor):
     #print(bags)
 
     print("Checking bags")
-    for lineitems in bags:
-        #print(lineitems)
-        for index, item in enumerate(lineitems):
-            if index > 0:
-                if item[1] == checkfor:
-                    biggerbags.append(lineitems[0])
-    return biggerbags
+    
+    lenwatch1 = len(bags)
+    lenwatch2 = 0
+    print(lenwatch1, lenwatch2)
+    while not(lenwatch2 == lenwatch1):
+        nothere = []
+        for lineitems in bags:
+            found = 0
+            #print(lineitems)
+            for index, item in enumerate(lineitems):
+                if index > 0:
+                    if item[1] in validbags:
+                        print(item[1])
+                        if not(lineitems[0] in validbags): #don't add if already in the list
+                            validbags.append(lineitems[0])
+                        found = 1
+            if not(found):
+                nothere.append(lineitems)  #this removes all bags that don't contain other bags and keeps all bags that didn't contain the bags we searched for
+        bags = list(nothere)
+        lenwatch2 = lenwatch1
+        lenwatch1 = len(bags)
+        print("Bags == nothere?", (bags == nothere))
+        print(lenwatch1, lenwatch2)
+    
 
-print(checkeverything(inputfile_source, bagtype))
+    return (validbags, len(validbags) - 1)
+
+    
+
+print(checkeverything(inputfile_source))
