@@ -3,33 +3,45 @@ import os
 
 print "importing"
 
-inputfile_source = os.path.dirname(__file__) + "/input.txt"
+colors = []
+contents = []
+inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
 
-def findthing1(testrange):
-    seekvalue = 0
-    for item in testrange:
-        seekvalue = 1
-    return seekvalue
+def checkeverything(filename, testcolor):
+    global colors
+    global contents
+    containerbags = []
 
-def findthing2(testrange):
-    seekvalue = 0
-    for item in testrange:
-        seekvalue = 1
-    return seekvalue
-
-def findgroup(testgroup):
-    return (findthing1(testgroup[1]) + findthing2(testgroup[2]))
-
-def checkeverything(filename):
     inputfile = open(filename)
-    inputfiledata = inputfile.readlines()
-    inputdata = inputfiledata.split("\n")
+    inputdata = inputfile.readlines()
     for line in inputdata:
-        result1 = findthing1(line)
-        result2 = findthing2(line)
-        result3 = findgroup(line)
-    print("Result %s" % result1)
-    print("Result %s" % result2)
-    print("Result %s" % result3)
+        line = line.replace("bags", "bag").replace(" bag, ", "|").replace(" bag.","").replace(" bag contain ","|").replace("|no other","").replace("\n","")
+        linedata = line.split("|")
+        notfound = not(linedata[0] in colors)
+        if notfound:
+            colors.append(linedata[0])
+        else:
+            print("Not unique!", linedata[0])
+        colorcontents = []
+        for index, item in enumerate(linedata):
+            if index == 0:
+                colorcontents.append(item)
+            else:
+                colorcontentsitem = item.split(" ",1)
+                colorcontents.append([colorcontentsitem[0],colorcontentsitem[1]])
+        contents.append(colorcontents)
+        #print(colorcontents)
+    
+    for line in contents:
+        #print(line)
+        for index, item in enumerate(line):
+            if index > 0:
+                #print(item)
+                if item[1] == testcolor:
+                    containerbags.append(line[0])
+    return containerbags
 
-checkeverything(inputfile_source)
+#dark orange bags contain 3 bright white bags, 4 muted yellow bags.
+#faded blue bags contain no other bags.
+
+print(checkeverything(inputfile_source, "shiny gold"))
