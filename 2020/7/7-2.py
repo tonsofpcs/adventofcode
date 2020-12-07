@@ -58,7 +58,8 @@ def checkeverything(filename):
         searchbagcounts = list(searchnextcounts)
         searchbags = [searchbagcolors, searchbagcounts]
         lenwatch = len(searchbagcolors)
-        print("Bags remaining to search:",lenwatch)
+        print("Count so far", bagcount, "Bags remaining to search:",lenwatch)
+    print(searchbags)
    
 
     return (bagcount)
