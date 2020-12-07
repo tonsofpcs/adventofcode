@@ -48,9 +48,13 @@ def checkeverything(filename):
                     if lineitems[0] in searchbagcolors:
                         #print(lineitems[0])
                         #print(item)
-                        searchnextcounts.append(item[0]*searchbagcounts[searchbagcolors.index(lineitems[0])])
-                        searchnextcolors.append(item[1])
-                        bagcount += item[0]*searchbagcounts[searchbagcolors.index(lineitems[0])]
+                        if item[1] in searchnextcolors:
+                            searchnextcounts[searchnextcolors.index(item[1])] += item[0]*searchbagcounts[searchbagcolors.index(lineitems[0])]
+                            bagcount += item[0]*searchbagcounts[searchbagcolors.index(lineitems[0])]
+                        else:
+                            searchnextcounts.append(item[0]*searchbagcounts[searchbagcolors.index(lineitems[0])])
+                            searchnextcolors.append(item[1])
+                            bagcount += item[0]*searchbagcounts[searchbagcolors.index(lineitems[0])]
         searchnext = [searchnextcolors, searchnextcounts]
         #print(searchnext, bagcount, len(searchnext))
         #break
