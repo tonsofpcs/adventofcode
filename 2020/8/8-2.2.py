@@ -4,7 +4,7 @@ import copy
 
 print "importing"
 
-inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
+inputfile_source = os.path.dirname(__file__) + "/input.txt"
 
 def codeexec(code):
     maxline = len(code)
@@ -21,7 +21,7 @@ def codeexec(code):
             break
         else:
             hasrun.append(line)
-        print(command, argv)
+        #print(command, argv)
         if (command == "acc"):
             acc += argv
             line += 1
