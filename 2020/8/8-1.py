@@ -3,7 +3,7 @@ import os
 
 print "importing"
 
-inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
+inputfile_source = os.path.dirname(__file__) + "/input.txt"
 
 def codeexec(code):
     maxline = len(code)
