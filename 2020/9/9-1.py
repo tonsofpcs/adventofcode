@@ -3,33 +3,28 @@ import os
 
 print "importing"
 
-inputfile_source = os.path.dirname(__file__) + "/input.txt"
+inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
+testlength = 5
 
-def findthing1(testrange):
-    seekvalue = 0
+def testpair(testrange, sumtocheck):
+    print(testrange, sumtocheck)
+    success = 0
     for item in testrange:
-        seekvalue = 1
-    return seekvalue
-
-def findthing2(testrange):
-    seekvalue = 0
-    for item in testrange:
-        seekvalue = 1
-    return seekvalue
-
-def findgroup(testgroup):
-    return (findthing1(testgroup[1]) + findthing2(testgroup[2]))
+        for item2 in testrange:
+            print(int(item.replace("\n","")), int(item2.replace("\n","")),(int(item.replace("\n","")) + int(item2.replace("\n",""))))
+            if (int(item.replace("\n","")) + int(item2.replace("\n",""))) == int(sumtocheck):
+                success = 1
+                break
+    return success
 
 def checkeverything(filename):
     inputfile = open(filename)
-    inputfiledata = inputfile.readlines()
-    inputdata = inputfiledata.split("\n")
-    for line in inputdata:
-        result1 = findthing1(line)
-        result2 = findthing2(line)
-        result3 = findgroup(line)
-    print("Result %s" % result1)
-    print("Result %s" % result2)
-    print("Result %s" % result3)
+    inputdata = inputfile.readlines()
+    for index, line in enumerate(inputdata):
+        if index >= testlength:
+            success = testpair(inputdata[index-(testlength):index],line)
+            if not(success): break
+    
+    return line
 
-checkeverything(inputfile_source)
+print(checkeverything(inputfile_source))
