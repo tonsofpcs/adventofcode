@@ -36,7 +36,6 @@ def findsumrange(dataset,sumtofind):
     result = 0
     while startpos < (length-2):
         cursum = sum(dataset[startpos:index])
-        print(dataset[startpos:index], cursum, sumtofind)
         if cursum == sumtofind:
             result = dataset[startpos:index]
             return [result, min(result)+max(result)]
