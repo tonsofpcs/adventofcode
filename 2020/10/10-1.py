@@ -24,12 +24,20 @@ def checkeverything(filename):
     inputfile = open(filename)
     inputfiledata = inputfile.read()
     inputdata = inputfiledata.split("\n")
+    sortdata =[]
     for line in inputdata:
-        result1 = findthing1(line)
-        result2 = findthing2(line)
-        result3 = findgroup(line)
-    print("Result %s" % result1)
-    print("Result %s" % result2)
-    print("Result %s" % result3)
+        sortdata.append(int(line))
+    
+    sortdata.sort()
+    diff = [0,0,0,0]
+    for index, line in enumerate(sortdata):
+        #print(index)
+        #print(int(line) - int(sortdata[index-1]))
+        if index == 0:
+            diff[int(line) - 0] += 1
+        if index > 0:
+            diff[int(line) - int(sortdata[index-1])] += 1
+    
+    return diff[1]*diff[3]
 
-checkeverything(inputfile_source)
+print(checkeverything(inputfile_source))
