@@ -29,15 +29,20 @@ def checkeverything(filename):
         sortdata.append(int(line))
     
     sortdata.sort()
-    diff = [0,0,0,0]
+    sortdata.append(max(sortdata)+3)
+    diff = [0,0,0,0,0,0]
     for index, line in enumerate(sortdata):
         #print(index)
         #print(int(line) - int(sortdata[index-1]))
         if index == 0:
+            print(int(line) - 0)
             diff[int(line) - 0] += 1
         if index > 0:
+            print(int(line) - int(sortdata[index-1]))
             diff[int(line) - int(sortdata[index-1])] += 1
+            print(int(line))
     
-    return diff[1]*diff[3]
+    print(diff)
+    return diff[1]*(diff[3])
 
 print(checkeverything(inputfile_source))
