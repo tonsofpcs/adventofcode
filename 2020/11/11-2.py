@@ -8,7 +8,7 @@ directiontable = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]]
 
 print "importing"
 
-inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
+inputfile_source = os.path.dirname(__file__) + "/input.txt"
 
 def checkseat(rowindex, seatindex, seatdata):
     #row.trim("\n","")
@@ -71,11 +71,11 @@ def checkeverything(filename):
     #maxseat = len(inputdata[0]) - 1
     samesies = 0
     counter = 0
-    print(counter, inputdata)
+    #print(counter, inputdata)
     while not samesies:
         counter += 1
         newdata = copy.copy(runaround(inputdata))
-        print(counter, newdata)
+        #print(counter, newdata)
         samesies = (newdata == inputdata)
         inputdata = copy.copy(newdata)
     
