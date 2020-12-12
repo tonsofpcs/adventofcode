@@ -1,9 +1,10 @@
 #!/usr/bin/python
 import os
+import copy
 
 print "importing"
 
-inputfile_source = os.path.dirname(__file__) + "/input.txt"
+inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
 
 directions = {
     0: [1,0],  #E
@@ -25,38 +26,50 @@ turn = {
 }
 
 maxdir = 3
-startdir = 0
+#startdir = 0
 
 def moveit(startpos, direction, amt):
     for index, item in enumerate(startpos):
-        startpos[index] += directions[direction][index] * amt
+        startpos[index] += direction[index] * amt
     return startpos
+
+def rotatetarget(target, base, direction, times):
+    reference = copy.copy(target)
+    while times > 4:
+        times -= 4 #let's not do this more than we have to
+    reference[0] = target[0] #- base[0]
+    reference[1] = target[1] #- base[1]
+    holder = 0
+    while times > 0:
+        holder = reference[0]
+        reference[0] = reference[1]*direction
+        reference[1] = holder*(0-direction)
+        times -= 1
+    return reference
+
 
 def checkeverything(filename):
     inputfile = open(filename)
     inputfiledata = inputfile.read()
     inputdata = inputfiledata.split("\n")
-    facing = startdir
+    #facing = startdir
     position = [0,0]
+    waypoint = [10,1]
     for line in inputdata:
         order = line[0]
         argv = int(line[1:])
         if order in ["N","S","E","W"]:
             movement = cardinal.get(order)
-            position = moveit(position, movement, argv)
+            waypoint = moveit(waypoint, directions.get(movement), argv)
         elif order in ["L","R"]:
-            facing = facing + turn.get(order)*int(argv / 90)
-            while facing > maxdir:
-                facing -= maxdir+1
-            while facing < 0:
-                facing += maxdir+1
+            waypoint = rotatetarget(waypoint, position, turn.get(order), argv/90)
         elif order == "F":
-            position = moveit(position, facing, argv)
+            position = moveit(position, waypoint, argv)
         else:
             print("ERROR! " + order + " is not a valid order!")
-        #print(position, facing)
+        #print(position,waypoint)
         
-    print(position, facing)
+    print(position, waypoint)
     print("Manhattan distance: %s" % (abs(position[0])+abs(position[1])))
 
 print checkeverything(inputfile_source)
