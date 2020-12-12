@@ -3,33 +3,60 @@ import os
 
 print "importing"
 
-inputfile_source = os.path.dirname(__file__) + "/input.txt"
+inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
 
-def findthing1(testrange):
-    seekvalue = 0
-    for item in testrange:
-        seekvalue = 1
-    return seekvalue
+directions = {
+    0: [1,0],  #E
+    1: [0,-1], #S
+    2: [-1,0], #W
+    3: [0,1] #N
+}
 
-def findthing2(testrange):
-    seekvalue = 0
-    for item in testrange:
-        seekvalue = 1
-    return seekvalue
+cardinal = {
+    "E": 0,
+    "S": 1,
+    "W": 2,
+    "N": 3 #N
+}
 
-def findgroup(testgroup):
-    return (findthing1(testgroup[1]) + findthing2(testgroup[2]))
+turn = {
+    "R": 1,
+    "L": -1,
+}
+
+maxdir = 3
+startdir = 0
+
+def moveit(startpos, direction, amt):
+    for index, item in enumerate(startpos):
+        startpos[index] += directions[direction][index] * amt
+    return startpos
 
 def checkeverything(filename):
     inputfile = open(filename)
     inputfiledata = inputfile.read()
     inputdata = inputfiledata.split("\n")
+    facing = startdir
+    position = [0,0]
     for line in inputdata:
-        result1 = findthing1(line)
-        result2 = findthing2(line)
-        result3 = findgroup(line)
-    print("Result %s" % result1)
-    print("Result %s" % result2)
-    print("Result %s" % result3)
+        order = line[0]
+        argv = int(line[1:])
+        if order in ["N","S","E","W"]:
+            movement = cardinal.get(order)
+            position = moveit(position, movement, argv)
+        elif order in ["L","R"]:
+            facing = facing + int(turn.get(order) / 90)
+            while facing > maxdir:
+                facing -= maxdir+1
+            while facing < 0:
+                facing += maxdir+1
+        elif order == "F":
+            position = moveit(position, facing, argv)
+        else:
+            print("ERROR! " + order + " is not a valid order!")
+        print(position, facing)
+        
+    print(position, facing)
+    print("Manhattan distance: %s" % (abs(position[0])+abs(position[1])))
 
-checkeverything(inputfile_source)
+print checkeverything(inputfile_source)
