@@ -4,7 +4,7 @@ import copy
 
 print "importing"
 
-inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
+inputfile_source = os.path.dirname(__file__) + "/input.txt"
 
 def checkseat(row, seatindex, thisseat):
     #row.trim("\n","")
@@ -59,11 +59,11 @@ def checkeverything(filename):
     #maxseat = len(inputdata[0]) - 1
     samesies = 0
     counter = 0
-    print(counter, inputdata)
+    #print(counter, inputdata)
     while not samesies:
         counter += 1
         newdata = copy.copy(runaround(inputdata))
-        print(counter, newdata)
+        #print(counter, newdata)
         #counter += 1
         #newdata = runaround(newdata)
         #print(counter, newdata)
