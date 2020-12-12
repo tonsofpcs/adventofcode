@@ -3,20 +3,32 @@ import os
 import copy
 
 seatcount = 4
+
+directiontable = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]]
+
 print "importing"
 
 inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
 
-def checkseat(row, seatindex, thisseat):
+def checkseat(rowindex, seatindex, seatdata):
     #row.trim("\n","")
     adjacent = 0
-    maxseat = len(row)-1
-    if not (seatindex == 0):
-        adjacent += (row[seatindex-1] == "#")
-    if not (thisseat):
-        adjacent += (row[seatindex] == "#")
-    if not (seatindex == maxseat):
-        adjacent += (row[seatindex+1] == "#")
+    maxseat = len(seatdata[0])-1
+    maxrow = len(seatdata) - 1
+    minrow = 0
+    minseat = 0
+    for direction in directiontable:
+        foundseat = 0
+        x = seatindex
+        y = rowindex
+        while not(foundseat):
+            foundseat = 1
+            x += direction[0]
+            y += direction[1]
+            if (y < minrow) or (y > maxrow) or (x < minseat) or (x > maxseat):
+                foundseat = 1
+            else:
+                adjacent += (seatdata[y][x] == "#")
     return adjacent
 
 def runaround(inputdata):
@@ -30,11 +42,7 @@ def runaround(inputdata):
             if seat == ".": #nothing to do for '.'
                 newseats[rowindex] += "."
             else:
-                if not (rowindex == 0):
-                    adjacent += checkseat(inputdata[rowindex-1],seatindex, 0)
-                adjacent += checkseat(inputdata[rowindex],seatindex, 1)
-                if not (rowindex == maxrow):
-                    adjacent += checkseat(inputdata[rowindex+1],seatindex, 0)
+                adjacent = checkseat(rowindex, seatindex, inputdata)
                 if seat == "L":
                     if adjacent == 0:
                         newseats[rowindex] += "#"
