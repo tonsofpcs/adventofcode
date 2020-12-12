@@ -37,8 +37,8 @@ def rotatetarget(target, base, direction, times):
     reference = copy.copy(target)
     while times > 4:
         times -= 4 #let's not do this more than we have to
-    reference[0] = target[0] #- base[0]
-    reference[1] = target[1] #- base[1]
+    reference[0] = target[0]
+    reference[1] = target[1]
     holder = 0
     while times > 0:
         holder = reference[0]
