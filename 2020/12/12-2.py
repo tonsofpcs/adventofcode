@@ -4,7 +4,7 @@ import copy
 
 print "importing"
 
-inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
+inputfile_source = os.path.dirname(__file__) + "/input.txt"
 
 directions = {
     0: [1,0],  #E
