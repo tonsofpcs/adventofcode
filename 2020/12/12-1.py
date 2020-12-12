@@ -45,7 +45,7 @@ def checkeverything(filename):
             movement = cardinal.get(order)
             position = moveit(position, movement, argv)
         elif order in ["L","R"]:
-            facing = facing + int(turn.get(order) / 90)
+            facing = facing + turn.get(order)*int(argv / 90)
             while facing > maxdir:
                 facing -= maxdir+1
             while facing < 0:
@@ -54,7 +54,7 @@ def checkeverything(filename):
             position = moveit(position, facing, argv)
         else:
             print("ERROR! " + order + " is not a valid order!")
-        print(position, facing)
+        #print(position, facing)
         
     print(position, facing)
     print("Manhattan distance: %s" % (abs(position[0])+abs(position[1])))
