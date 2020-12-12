@@ -1,35 +1,78 @@
 #!/usr/bin/python
 import os
+import copy
 
 print "importing"
 
-inputfile_source = os.path.dirname(__file__) + "/input.txt"
+inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
 
-def findthing1(testrange):
-    seekvalue = 0
-    for item in testrange:
-        seekvalue = 1
-    return seekvalue
+def checkseat(row, seatindex, thisseat):
+    #row.trim("\n","")
+    adjacent = 0
+    maxseat = len(row)-1
+    if not (seatindex == 0):
+        adjacent += (row[seatindex-1] == "#")
+    if not (thisseat):
+        adjacent += (row[seatindex] == "#")
+    if not (seatindex == maxseat):
+        adjacent += (row[seatindex+1] == "#")
+    return adjacent
 
-def findthing2(testrange):
-    seekvalue = 0
-    for item in testrange:
-        seekvalue = 1
-    return seekvalue
+def runaround(inputdata):
+    maxrow = len(inputdata) - 1
+    newseats = []
+    for rowindex, row in enumerate(inputdata):
+        newseats.append( "")
+        for seatindex, seat in enumerate(row):
+            #print (rowindex, seatindex)
+            adjacent = 0
+            if seat == ".": #nothing to do for '.'
+                newseats[rowindex] += "."
+            else:
+                if not (rowindex == 0):
+                    adjacent += checkseat(inputdata[rowindex-1],seatindex, 0)
+                adjacent += checkseat(inputdata[rowindex],seatindex, 1)
+                if not (rowindex == maxrow):
+                    adjacent += checkseat(inputdata[rowindex+1],seatindex, 0)
+                if seat == "L":
+                    if adjacent == 0:
+                        newseats[rowindex] += "#"
+                    else:
+                        newseats[rowindex] += "L"
+                if seat == "#":
+                    if adjacent >= 4:
+                        newseats[rowindex] += "L"
+                    else:
+                        newseats[rowindex] += "#"
+    return(newseats)
 
-def findgroup(testgroup):
-    return (findthing1(testgroup[1]) + findthing2(testgroup[2]))
+def countoccupied(inputdata):
+    count = 0
+    for row in inputdata:
+        count += row.count("#")
+    return count
 
 def checkeverything(filename):
     inputfile = open(filename)
     inputfiledata = inputfile.read()
     inputdata = inputfiledata.split("\n")
-    for line in inputdata:
-        result1 = findthing1(line)
-        result2 = findthing2(line)
-        result3 = findgroup(line)
-    print("Result %s" % result1)
-    print("Result %s" % result2)
-    print("Result %s" % result3)
+    #maxseat = len(inputdata[0]) - 1
+    samesies = 0
+    counter = 0
+    print(counter, inputdata)
+    while not samesies:
+        counter += 1
+        newdata = copy.copy(runaround(inputdata))
+        print(counter, newdata)
+        #counter += 1
+        #newdata = runaround(newdata)
+        #print(counter, newdata)
+        samesies = (newdata == inputdata)
+        inputdata = copy.copy(newdata)
+    
+    return countoccupied(newdata)
 
-checkeverything(inputfile_source)
+
+  
+
+print(checkeverything(inputfile_source))
