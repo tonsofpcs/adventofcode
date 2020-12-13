@@ -3,7 +3,9 @@ import os
 
 print "importing"
 
-inputfile_source = os.path.dirname(__file__) + "/input.txt"
+colors = []
+contents = []
+inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
 
 nothere = []
 validbags = ["shiny gold"]
