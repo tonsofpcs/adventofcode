@@ -44,7 +44,7 @@ def checkeverything(filename):
         countindex += maxbus
         notfound = 0
         for busindex, bus in enumerate(busses):
-            if bus == maxbus:
+            if bus == maxbus or bus == 1:
                 pass
             else:
                 if (countindex + busindex) % bus:
