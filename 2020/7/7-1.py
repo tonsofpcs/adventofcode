@@ -7,41 +7,58 @@ colors = []
 contents = []
 inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
 
-def checkeverything(filename, testcolor):
-    global colors
-    global contents
-    containerbags = []
+nothere = []
+validbags = ["shiny gold"]
 
+def checkeverything(filename):
     inputfile = open(filename)
     inputdata = inputfile.readlines()
-    for line in inputdata:
-        line = line.replace("bags", "bag").replace(" bag, ", "|").replace(" bag.","").replace(" bag contain ","|").replace("|no other","").replace("\n","")
-        linedata = line.split("|")
-        notfound = not(linedata[0] in colors)
-        if notfound:
-            colors.append(linedata[0])
-        else:
-            print("Not unique!", linedata[0])
-        colorcontents = []
-        for index, item in enumerate(linedata):
-            if index == 0:
-                colorcontents.append(item)
-            else:
-                colorcontentsitem = item.split(" ",1)
-                colorcontents.append([colorcontentsitem[0],colorcontentsitem[1]])
-        contents.append(colorcontents)
-        #print(colorcontents)
+    bags = []
     
-    for line in contents:
-        #print(line)
-        for index, item in enumerate(line):
-            if index > 0:
-                #print(item)
-                if item[1] == testcolor:
-                    containerbags.append(line[0])
-    return containerbags
+    print("Parsing data")
+    for line in inputdata:
+        line = line.replace("bags","bag").replace(" bag, ", "|").replace(" bag contain no other bag.","").replace(" bag contain ","|").replace(" bag.","").replace("\n","")
+        lineitems = line.split("|")
+        colors = []
+        bag = []
+        for index, item in enumerate(lineitems):
+            if index == 0:
+                colors.append(item)
+                bag.append(item)
+            else:
+                item = item.split(" ",1)
+                bag.append([int(item[0]), item[1]])
+        bags.append(bag)
+    #print(bags)
 
-#dark orange bags contain 3 bright white bags, 4 muted yellow bags.
-#faded blue bags contain no other bags.
+    print("Checking bags")
+    
+    lenwatch1 = len(bags)
+    lenwatch2 = 0
+    print(lenwatch1, lenwatch2)
+    while not(lenwatch2 == lenwatch1):
+        nothere = []
+        for lineitems in bags:
+            found = 0
+            #print(lineitems)
+            for index, item in enumerate(lineitems):
+                if index > 0:
+                    if item[1] in validbags:
+                        print(item[1])
+                        if not(lineitems[0] in validbags): #don't add if already in the list
+                            validbags.append(lineitems[0])
+                        found = 1
+            if not(found):
+                nothere.append(lineitems)  #this removes all bags that don't contain other bags and keeps all bags that didn't contain the bags we searched for
+        bags = list(nothere)
+        lenwatch2 = lenwatch1
+        lenwatch1 = len(bags)
+        print("Bags == nothere?", (bags == nothere))
+        print(lenwatch1, lenwatch2)
+    
 
-print(checkeverything(inputfile_source, "shiny gold"))
+    return (validbags, len(validbags) - 1)
+
+    
+
+print(checkeverything(inputfile_source))
