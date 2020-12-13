@@ -4,7 +4,7 @@ import copy
 
 print "importing"
 
-inputfile_source = os.path.dirname(__file__) + "/input.txt"
+inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
 
 def findthing1(testrange):
     seekvalue = 0
@@ -25,12 +25,18 @@ def checkeverything(filename):
     inputfile = open(filename)
     inputfiledata = inputfile.read()
     inputdata = inputfiledata.split("\n")
-    for line in inputdata:
-        result1 = findthing1(line)
-        result2 = findthing2(line)
-        result3 = findgroup(line)
-    print("Result %s" % result1)
-    print("Result %s" % result2)
-    print("Result %s" % result3)
+    starttime = int(inputdata[0])
+    busdata = inputdata[1].split(",")
+    busses = []
+    for item in busdata:
+        if not (item == "x"):
+            busses.append(int(item))
+            
+    nextstart = []
+    for bus in busses:
+        nextstart.append(bus - starttime % bus)
+        #print(starttime, bus, bus - (starttime % bus))
+    busindex = nextstart.index(min(nextstart))
+    return busses[busindex] * nextstart[busindex]
 
-checkeverything(inputfile_source)
+print(checkeverything(inputfile_source))
