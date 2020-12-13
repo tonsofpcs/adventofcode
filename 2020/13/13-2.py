@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import os
 import copy
+from datetime import datetime
 
 print "importing"
 
@@ -51,4 +52,7 @@ def checkeverything(filename):
                     break
     return countindex
 
+
+print(datetime.now())
 print(checkeverything(inputfile_source))
+print(datetime.now())
