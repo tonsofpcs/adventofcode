@@ -5,7 +5,7 @@ from datetime import datetime
 
 print "importing"
 
-inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
+inputfile_source = os.path.dirname(__file__) + "/input.txt"
 
 def findthing1(testrange):
     seekvalue = 0
@@ -44,7 +44,7 @@ def checkeverything(filename):
         countindex += maxbus
         notfound = 0
         for busindex, bus in enumerate(busses):
-            if bus == maxbus or bus == 1:
+            if bus == 1 or bus == maxbus:
                 pass
             else:
                 if (countindex + busindex) % bus:
