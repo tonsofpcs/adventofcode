@@ -42,20 +42,21 @@ def checkeverything(filename):
             busses.append([int(item),intbusdata.index(item)])
     maxbus = max(sortdata)
     countindex = maxbus - intbusdata.index(maxbus)
+    #print(sortdata)
+    #print(busses)
     while countindex < 0:
         countindex += maxbus
     countindex -= maxbus
     notfound = 1
+    busses.pop(0) #no need to check the first one
     while notfound:
         countindex += maxbus
         notfound = 0
         for bus, busindex in busses:
-            if bus == maxbus:
-                pass
-            else:
-                if (countindex + busindex) % bus:
-                    notfound = 1 
-                    break
+            #print(bus,busindex)
+            if (countindex + busindex) % bus:
+                notfound = 1 
+                break
     return countindex
 
 
