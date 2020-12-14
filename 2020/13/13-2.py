@@ -29,13 +29,19 @@ def checkeverything(filename):
     starttime = int(inputdata[0])
     busdata = inputdata[1].split(",")
     busses = []
+    intbusdata = []
     for item in busdata:
-        if not (item == "x"):
-            busses.append(int(item))
+        if item == "x":
+            intbusdata.append(-1)
         else:
-            busses.append(1)
-    maxbus = max(busses)
-    countindex = maxbus - busses.index(maxbus)
+            intbusdata.append(int(item))
+    sortdata = copy.copy(intbusdata)
+    sortdata.sort(reverse = True)
+    for item in sortdata:
+        if not (item == -1):
+            busses.append([int(item),intbusdata.index(item)])
+    maxbus = max(sortdata)
+    countindex = maxbus - intbusdata.index(maxbus)
     while countindex < 0:
         countindex += maxbus
     countindex -= maxbus
@@ -43,8 +49,8 @@ def checkeverything(filename):
     while notfound:
         countindex += maxbus
         notfound = 0
-        for busindex, bus in enumerate(busses):
-            if bus == 1 or bus == maxbus:
+        for bus, busindex in busses:
+            if bus == maxbus:
                 pass
             else:
                 if (countindex + busindex) % bus:
