@@ -47,29 +47,20 @@ def checkeverything(filename):
     while countindex < 0:
         countindex += maxbus
     countindex -= maxbus
-    offset = countindex
-    iterateby = maxbus
     notfound = 1
     busses.pop(0) #no need to check the first one
     while notfound:
-        countindex += iterateby
+        countindex += maxbus
         notfound = 0
         for index, [bus, busindex, busfound] in enumerate(busses):
-            #print(countindex,iterateby)
             #print(bus,busindex)
             if (countindex + busindex) % bus:
                 notfound = 1 
                 break
             else:
-                if not(busfound):
+                print("Found %s (%s) at %s!" % (bus, busindex, countindex))
+                if busfound == 0:
                     busses[index] = [bus, busindex, 1]
-                    print(iterateby, countindex, offset)
-                    iterateby = countindex + offset
-                    countindex += busindex
-                    print(iterateby, countindex, offset)
-                    print("Found %s at %s" % (bus, countindex))
-                    print(busses, countindex, iterateby)
-    
     return countindex
 
 
