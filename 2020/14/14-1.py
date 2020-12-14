@@ -12,25 +12,36 @@ def findthing1(testrange):
         seekvalue = 1
     return seekvalue
 
-def findthing2(testrange):
-    seekvalue = 0
+def maskreplace(base, mask):
     for item in testrange:
         seekvalue = 1
     return seekvalue
-
-def findgroup(testgroup):
-    return (findthing1(testgroup[1]) + findthing2(testgroup[2]))
 
 def checkeverything(filename):
     inputfile = open(filename)
     inputfiledata = inputfile.read()
     inputdata = inputfiledata.split("\n")
+    maskdata = ""
+    indexbase = []
+    database = []
+    location = 0
     for line in inputdata:
-        result1 = findthing1(line)
-        result2 = findthing2(line)
-        result3 = findgroup(line)
-    print("Result %s" % result1)
-    print("Result %s" % result2)
-    print("Result %s" % result3)
+        linedata = line.split(" = ")
+        if linedata[0] == "mask":
+            maskdata = linedata[1]
+        elif linedata[0][0:3] == "mem":
+            address = int(linedata[0].replace("]","")[5:])
+            if address in indexbase:
+                pass #TODO: Replace data
+                location = indexbase.index(address)
+                database[location] = maskreplace(linedata[1],maskdata)
+            else:
+                indexbase.append(address)
+                database.append(maskreplace(linedata[1],maskdata))
+        else:
+            print("ERROR.  Invalid command, ", linedata[0])
+            return("ERROR")
+    
+    return database.sum()
 
-checkeverything(inputfile_source)
+print(checkeverything(inputfile_source))
