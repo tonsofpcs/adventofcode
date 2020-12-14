@@ -6,16 +6,20 @@ print "importing"
 
 inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
 
-def findthing1(testrange):
-    seekvalue = 0
-    for item in testrange:
-        seekvalue = 1
-    return seekvalue
-
 def maskreplace(base, mask):
-    for item in testrange:
-        seekvalue = 1
-    return seekvalue
+    binary = format(base,"036b")
+    newbin = ""
+    for index, item in enumerate(mask):
+        if item == "X":
+            newbin += binary[index]
+        elif item == "1":
+            newbin += "1"
+        elif item == "0":
+            newbin += "0"
+        else:
+            print("ERROR.  Bad Mask.", mask)
+    return int(newbin,2)
+
 
 def checkeverything(filename):
     inputfile = open(filename)
@@ -30,18 +34,19 @@ def checkeverything(filename):
         if linedata[0] == "mask":
             maskdata = linedata[1]
         elif linedata[0][0:3] == "mem":
-            address = int(linedata[0].replace("]","")[5:])
+            address = int(linedata[0].replace("]","")[4:])
             if address in indexbase:
                 pass #TODO: Replace data
                 location = indexbase.index(address)
-                database[location] = maskreplace(linedata[1],maskdata)
+                database[location] = maskreplace(int(linedata[1]),maskdata)
+                #print(address, database[location])
             else:
                 indexbase.append(address)
-                database.append(maskreplace(linedata[1],maskdata))
+                database.append(maskreplace(int(linedata[1]),maskdata))
+                #print(address, database[location])
         else:
             print("ERROR.  Invalid command, ", linedata[0])
             return("ERROR")
-    
-    return database.sum()
+    return sum(database)
 
 print(checkeverything(inputfile_source))
