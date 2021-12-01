@@ -2,7 +2,7 @@
 import os
 import copy
 
-print "importing"
+print("importing")
 
 inputfile_source = os.path.dirname(__file__) + "/input.txt"
 
