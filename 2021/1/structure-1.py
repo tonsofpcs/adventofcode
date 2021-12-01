@@ -30,7 +30,7 @@ def checkeverything(filename):
 
     for index, line in enumerate(inputdata):
         if (index >= 1):
-            if(line > inputdata(index - 1)):
+            if(line > inputdata[index - 1]):
                 count += 1
     result1 = count
     print("Result %s" % result1)
