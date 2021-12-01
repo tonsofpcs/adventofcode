@@ -25,12 +25,14 @@ def checkeverything(filename):
     inputfile = open(filename)
     inputfiledata = inputfile.read()
     inputdata = inputfiledata.split("\n")
-    for line in inputdata:
-        result1 = findthing1(line)
-        result2 = findthing2(line)
-        result3 = findgroup(line)
+
+    count = 0
+
+    for index, line in enumerate(inputdata):
+        if (index >= 1):
+            if(line > inputdata(index - 1)):
+                count += 1
+    result1 = count
     print("Result %s" % result1)
-    print("Result %s" % result2)
-    print("Result %s" % result3)
 
 checkeverything(inputfile_source)
