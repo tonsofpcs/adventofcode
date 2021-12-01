@@ -4,7 +4,7 @@ import copy
 
 print "importing"
 
-inputfile_source = os.path.dirname(__file__) + "/input.txt"
+inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
 
 def findthing1(testrange):
     seekvalue = 0
@@ -28,9 +28,9 @@ def checkeverything(filename):
 
     count = 0
 
-    for index, line in enumerate(inputdata):
-        if (index >= 1):
-            if(int(line) > int(inputdata[index - 1])):
+    for index in range(len(inputdata)):
+        if (index >= 2):
+            if(int(inputdata[index])+int(inputdata[index - 1])+int(inputdata[index - 2]) > int(inputdata[index - 1])+int(inputdata[index - 2])+int(inputdata[index - 3])):
                 count += 1
     result1 = count
     print("Result %s" % result1)
