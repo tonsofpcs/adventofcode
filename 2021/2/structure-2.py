@@ -20,8 +20,8 @@ def findthing1(testrange):
 
 def findthing2(testrange):
     testval = findthing1(testrange)
-    hv = [directions[testval[0]][0] * int(testval[1]), directions[testval[0]][1] * int(testval[1])]
-    return hv
+    ha = [directions[testval[0]][0] * int(testval[1]), directions[testval[0]][1] * int(testval[1])]
+    return ha
 
 def findgroup(testgroup):
     return (findthing1(testgroup[1]) + findthing2(testgroup[2]))
@@ -32,17 +32,25 @@ def checkeverything(filename):
     inputdata = inputfiledata.split("\n")
 
     horiz = []
-    vert = []
+    aim = []
 
     for line in inputdata:
-        hv = findthing2(line)
-        #print(hv)
-        horiz.append(hv[0])
-        vert.append(hv[1])
+        ha = findthing2(line)
+        #print(ha)
+        horiz.append(ha[0])
+        aim.append(ha[1])
     
-    result1 = sum(horiz)
-    result2 = sum(vert)
-    result3 = result1 * result2
+    ht = 0
+    vt = 0
+    curraim = 0
+    for index in range(len(horiz)):
+        ht += horiz[index]
+        curraim += aim[index]
+        vt += horiz[index]*curraim
+
+    result1 = ht
+    result2 = vt
+    result3 = ht * vt
 
     print("Horiz %s" % result1)
     print("Depth %s" % result2)
