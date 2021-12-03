@@ -25,12 +25,29 @@ def checkeverything(filename):
     inputfile = open(filename)
     inputfiledata = inputfile.read()
     inputdata = inputfiledata.split("\n")
-    for line in inputdata:
-        result1 = findthing1(line)
-        result2 = findthing2(line)
-        result3 = findgroup(line)
-    print("Result %s" % result1)
-    print("Result %s" % result2)
-    print("Result %s" % result3)
+
+    linelen = len(inputdata[0])
+    linecount = len(inputdata)
+    colsum = []
+    epsilon = []
+    gamma = []
+    for col in range(linelen):
+        colsum.append(0)
+        for line in inputdata:
+            colsum[col] += int(line[col])
+        print(colsum[col])
+        gamma.append(str(1*(colsum[col] > linecount/2)))
+        epsilon.append(str(1*(colsum[col] <= linecount/2)))
+    
+    print(gamma)
+    print(epsilon)
+
+    epstot = int(''.join(epsilon), 2)
+    gamtot = int(''.join(gamma), 2)
+    mult = epstot*gamtot
+
+    print("Epsilon %s" % epstot)
+    print("Gamma %s" % gamtot)
+    print("Mult %s" % mult)
 
 checkeverything(inputfile_source)
