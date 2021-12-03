@@ -45,7 +45,7 @@ def checkeverything(filename):
         print(colsum[col], linecount/2.0,str(1*(colsum[col] >= linecount/2.0)))
         gamma.append(str(1*(colsum[col] >= linecount/2.0)))
         gamtot = ''.join(gamma)
-        print gamtot
+        print(gamtot)
 
     #find that last one
     for line in inputdata:
@@ -72,7 +72,7 @@ def checkeverything(filename):
         print(colsum[col], linecount/2.0,str(1*(colsum[col] < linecount/2.0)))
         epsilon.append(str(1*(colsum[col] < linecount/2.0)))
         epstot = ''.join(epsilon)
-        print epstot
+        print(epstot)
 
     #find that last one
     for line in inputdata:
