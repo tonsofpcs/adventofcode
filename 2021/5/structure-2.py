@@ -4,8 +4,8 @@ import copy
 
 print("importing")
 
-inputfile_source = os.path.dirname(__file__) + "/input.txt"
-maxsize = 1000
+inputfile_source = os.path.dirname(__file__) + "/testinput2.txt"
+maxsize = 10
 
 def inlinehv(point, path):
     if (point[1] == path[0][1] == path[1][1]) and ((path[0][0] <= point[0] <= path[1][0]) or (path[0][0] >= point[0] >= path[1][0])):
@@ -83,7 +83,7 @@ def checkeverything(filename):
             for y in range(ymin, ymax+1):
                 if inline([x,y],path):
                     grid[y][x] += 1
-                    #print(x,y,grid[y][x])
+                    print(path,[x,y])
                     if grid[y][x] == 2:
                         ge2 += 1        
 
