@@ -1,17 +1,16 @@
 #!/usr/bin/python
 import os
-import copy
 import re
 
 print("importing")
 
 inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
 
-def findthing1(testrange):
-    seekvalue = 0
-    for item in testrange:
-        seekvalue = 1
-    return seekvalue
+def findwinner(boards, numbers):
+    for index in range(len(numbers))[4:]:
+        testrange = numbers[0:index+1]
+        for board in boards:
+            continue
 
 def findthing2(testrange):
     seekvalue = 0
@@ -27,7 +26,7 @@ def checkeverything(filename):
     inputfiledata = inputfile.read()
     inputdata = inputfiledata.split("\n")
 
-    callednumbers = inputdata[0]
+    callednumbers = inputdata[0].split(",")
 
     boards = []
 
@@ -57,12 +56,24 @@ def checkeverything(filename):
                 board[3][1],
                 board[4][0]
             ])
-    #    result1 = findthing1(line)
+
+    markedboards = list(boards)
+
+    for number in callednumbers:
+        for index, board in enumerate(markedboards):
+            for line in board:
+                try: 
+                    found = line.index(number)
+                    line[found] = "x"
+                except: pass
+
+
+    #    winnerid = findwinner(boards, callednumbers)
     #    result2 = findthing2(line)
     #    result3 = findgroup(line)
 
-    print(boards)
-    print(diagonals1, diagonals2)
+    print(markedboards)
+    #print(diagonals1, diagonals2)
 
     #print("Result %s" % result1)
     #print("Result %s" % result2)
