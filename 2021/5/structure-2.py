@@ -4,15 +4,15 @@ import copy
 
 print("importing")
 
-inputfile_source = os.path.dirname(__file__) + "/testinput2.txt"
+inputfile_source = os.path.dirname(__file__) + "/input.txt"
 maxsize = 1000
 
 def inlinehv(point, path):
     if (point[1] == path[0][1] == path[1][1]) and ((path[0][0] <= point[0] <= path[1][0]) or (path[0][0] >= point[0] >= path[1][0])):
-        print(path, point,"H")
+        #print(path, point,"H")
         return(True)
     elif (point[0] == path[0][0] == path[1][0]) and ((path[0][1] <= point[1] <= path[1][1]) or (path[0][1] >= point[1] >= path[1][1])):
-        print(path,point,"V")
+        #print(path,point,"V")
         return(True)
     else:
         return(False)
@@ -31,20 +31,20 @@ def inline(point,path):
     if path[0][0] == xmax:
         if path[0][1] == ymax:
             if (path[0][0] - point[0]) == (path[0][1] - point[1]):
-                print(path,point, "upleft")
+                #print(path,point, "upleft")
                 return True
         else:
             if -(path[0][0] - point[0]) == (path[0][1] - point[1]):
-                print(path,point, "downleft")
+                #print(path,point, "downleft")
                 return True
     else:
         if path[0][1] == ymax:
             if (path[1][0] - point[0]) == -(path[1][1] - point[1]):
-                print(path,point, "upright")
+                #print(path,point, "upright")
                 return True
         else:
             if (path[1][0] - point[1]) == (path[1][1] - point[0]):
-                print(path,point, "downright")
+                #print(path,point, "downright")
                 return True
     return False
 
@@ -75,8 +75,8 @@ def checkeverything(filename):
     item = 0
     pathlen = len(paths)
     for path in paths:
-        #item += 1
-        #print("%s of %s" % (item, pathlen))
+        item += 1
+        print("%s of %s" % (item, pathlen))
         xmin = min(path[0][0],path[1][0])
         xmax = max(path[0][0],path[1][0])
         ymin = min(path[0][1],path[1][1])
@@ -85,9 +85,9 @@ def checkeverything(filename):
             for y in range(ymin, ymax+1):
                 if inline([x,y],path):
                     grid[y][x] += 1
-                    #print(path,[x,y])
                     if grid[y][x] == 2:
                         ge2 += 1        
+                        #print(path,[x,y],grid[y][x])
 
     ge2b = 0
     for gridrow in grid:
@@ -95,7 +95,7 @@ def checkeverything(filename):
             if griditem >= 2:
                 ge2b += 1
     #print("All lines:")
-    #print(paths)
+    ##print(paths)
     #print("HV Only:")
     #print(hvpaths)
 
