@@ -4,15 +4,15 @@ import copy
 
 print("importing")
 
-inputfile_source = os.path.dirname(__file__) + "/testinput4.txt"
-maxsize = 10
+inputfile_source = os.path.dirname(__file__) + "/input.txt"
+maxsize = 1000
 
 def inlinehv(point, path):
     if (point[1] == path[0][1] == path[1][1]) and ((path[0][0] <= point[0] <= path[1][0]) or (path[0][0] >= point[0] >= path[1][0])):
-        #print(path, point,"H")
+        # print(path, point,"H")
         return(True)
     elif (point[0] == path[0][0] == path[1][0]) and ((path[0][1] <= point[1] <= path[1][1]) or (path[0][1] >= point[1] >= path[1][1])):
-        #print(path,point,"V")
+        # print(path,point,"V")
         return(True)
     else:
         return(False)
@@ -31,20 +31,20 @@ def inline(point,path):
     if path[0][0] == xmax:
         if path[0][1] == ymax:
             if (path[0][0] - point[0]) == (path[0][1] - point[1]):
-                #print(path,point, "upleft")
+                # print(path,point, "upleft")
                 return True
         else:
             if -(path[0][0] - point[0]) == (path[0][1] - point[1]):
-                #print(path,point, "downleft")
+                # print(path,point, "downleft")
                 return True
     else:
         if path[0][1] == ymax:
             if (path[1][0] - point[0]) == -(path[1][1] - point[1]):
-                #print(path,point, "upright")
+                # print(path,point, "upright")
                 return True
         else:
-            if (path[1][0] - point[1]) == (path[1][1] - point[0]):
-                #print(path,point, "downright")
+            if -(path[1][0] - point[0]) == -(path[1][1] - point[1]):
+                # print(path,point, "downright")
                 return True
     return False
 
@@ -91,7 +91,7 @@ def checkeverything(filename):
                     grid[y][x] += 1
                     if grid[y][x] == 2:
                         ge2 += 1        
-                        #print(path,[x,y],grid[y][x])
+                        # print(path,[x,y],grid[y][x])
 
     ge2b = 0
     for gridrow in grid:
@@ -99,12 +99,12 @@ def checkeverything(filename):
             if griditem >= 2:
                 ge2b += 1
     #print("All lines:")
-    ##print(paths)
+    #print(paths)
     #print("HV Only:")
     #print(hvpaths)
 
     print("Result %s" % ge2)
     print("Result check %s" % ge2b)
-    print(grid)
+    # print(grid)
 
 checkeverything(inputfile_source)
