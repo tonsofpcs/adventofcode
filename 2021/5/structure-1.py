@@ -4,7 +4,7 @@ import copy
 
 print("importing")
 
-inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
+inputfile_source = os.path.dirname(__file__) + "/input.txt"
 
 def inlinehv (point, path):
     if (point[1] == path[0][1] == path[1][1]) and ((path[0][0] <= point[0] <= path[1][0]) or (path[0][0] >= point[0] >= path[1][0])):
@@ -49,7 +49,11 @@ def checkeverything(filename):
             hvpaths.append([[int(x1),int(y1)],[int(x2),int(y2)]])
     
     ge2 = 0
+    item = 0
+    pathlen = len(hvpaths)
     for path in hvpaths:
+        item += 1
+        print("%s of %s" % (item, pathlen))
         for x in range(1000):
             for y in range(1000):
                 if inlinehv([x,y],path):
