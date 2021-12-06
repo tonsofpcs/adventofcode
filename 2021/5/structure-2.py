@@ -64,7 +64,7 @@ def checkeverything(filename):
                     grid[y][x] += 1
                     #print(x,y,grid[y][x])
                     if grid[y][x] == 2:
-                        ge2 += 1  
+                        ge2 += 1        
 
 
     #print("All lines:")
