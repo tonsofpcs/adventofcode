@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import os
 import copy
+import re
 
 print("importing")
 
@@ -28,15 +29,21 @@ def checkeverything(filename):
 
     callednumbers = inputdata[0]
 
-    boards = inputdata[2:]
+    boards = []
 
     print(callednumbers)
-    print(boards)
+    for index in range(int((len(inputdata)-1)/6)):
+        board = []
+        for line in inputdata[index*6+2:index*5+7]:
+            board.append(re.split(" +",line.strip(" ")))
+        boards.append(board)
 
-    #for line in inputdata:
     #    result1 = findthing1(line)
     #    result2 = findthing2(line)
     #    result3 = findgroup(line)
+
+    print(boards)
+
     #print("Result %s" % result1)
     #print("Result %s" % result2)
     #print("Result %s" % result3)
