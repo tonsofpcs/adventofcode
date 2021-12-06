@@ -4,8 +4,8 @@ import copy
 
 print("importing")
 
-inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
-maxsize = 10
+inputfile_source = os.path.dirname(__file__) + "/input.txt"
+maxsize = 1000
 
 def inlinehv(point, path):
     if (point[1] == path[0][1] == path[1][1]) and ((path[0][0] <= point[0] <= path[1][0]) or (path[0][0] >= point[0] >= path[1][0])):
@@ -40,15 +40,11 @@ def inline(point,path):
                 return True
         else:
             if (path[1][0] - point[1]) == (path[1][1] - point[0]):
-                print(path,point)
+                #print(path,point)
                 return True
 
     #print("45 but not the right way?", point, path)
     return False
-
-
-def findgroup(testgroup):
-    return (findthing1(testgroup[1]) + findthing2(testgroup[2]))
 
 def checkeverything(filename):
     inputfile = open(filename)
@@ -98,6 +94,6 @@ def checkeverything(filename):
     #print(hvpaths)
 
     print("Result %s" % ge2)
-    print(grid)
+    #print(grid)
 
 checkeverything(inputfile_source)
