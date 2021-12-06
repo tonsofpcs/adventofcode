@@ -6,7 +6,7 @@ print("importing")
 
 inputfile_source = os.path.dirname(__file__) + "/input.txt"
 
-def findwinner(boards, numbers):
+def findlastwinner(boards, numbers):
 
     diagonals1 = []
     diagonals2 = []
@@ -31,6 +31,13 @@ def findwinner(boards, numbers):
     markedboards = list(boards)
     doneline = ['x','x','x','x','x']
 
+    haswon = []
+    allwon = []
+
+    for index in range(len(markedboards)):
+        haswon.append(False)
+        allwon.append(True)
+
     for number in numbers:
         for index, board in enumerate(markedboards):
             for line in board:
@@ -39,30 +46,16 @@ def findwinner(boards, numbers):
                     line[found] = "x"
                     if line == doneline:
                         print("Found one! %s" % index)
-                        return(index, number,board)
+                        haswon[index] = True
+                        if haswon == allwon:
+                            return(index, number,board)
                 except: pass
             for line in list(map(list, zip(*board))):
                 if line == doneline:
                     print("Found one! map %s" % index)
-                    return(index, number, board)
-        for index, line in enumerate(diagonals1):  #let's mark the diagonals separate to make them easier to check
-            try: 
-                found = line.index(number)
-                line[found] = "x"
-                if line == doneline:
-                    continue
-                    #print("Found one! Diagonal1 %s" % index)
-                    #return(index, number, markedboards[index])
-            except: pass
-        for index, line in enumerate(diagonals2):
-            try: 
-                found = line.index(number)
-                line[found] = "x"
-                if line == doneline:
-                    continue
-                    #print("Found one! Diagonal2 %s" % index)
-                    #return(index, number, markedboards[index])
-            except: pass
+                    haswon[index] = True
+                    if haswon == allwon:
+                        return(index, number,board)
             
 
 def findthing2(testrange):
@@ -91,7 +84,7 @@ def checkeverything(filename):
         boards.append(board)
 
 
-    winnerid, lastnum, winningboard = findwinner(boards,callednumbers)
+    winnerid, lastnum, winningboard = findlastwinner(boards,callednumbers)
     print(winnerid, lastnum, winningboard)
 
     sumboard = 0
