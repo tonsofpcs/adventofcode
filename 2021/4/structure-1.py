@@ -7,10 +7,63 @@ print("importing")
 inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
 
 def findwinner(boards, numbers):
-    for index in range(len(numbers))[4:]:
-        testrange = numbers[0:index+1]
-        for board in boards:
-            continue
+
+    diagonals1 = []
+    diagonals2 = []
+    for board in boards:
+        diagonals1.append(
+            [
+                board[0][0],
+                board[1][1],
+                board[2][2],
+                board[3][3],
+                board[4][4]
+            ])
+        diagonals2.append(
+            [
+                board[0][4],
+                board[1][3],
+                board[2][2],
+                board[3][1],
+                board[4][0]
+            ])
+
+    markedboards = list(boards)
+    doneline = ['x','x','x','x','x']
+
+    for number in numbers:
+        for index, board in enumerate(markedboards):
+            for line in board:
+                try: 
+                    found = line.index(number)
+                    line[found] = "x"
+                    if line == doneline:
+                        print("Found one! %s" % index)
+                        return(index, number,board)
+                except: pass
+            for line in list(map(list, zip(*board))):
+                if line == doneline:
+                    print("Found one! map %s" % index)
+                    return(index, number, board)
+        for index, line in enumerate(diagonals1):  #let's mark the diagonals separate to make them easier to check
+            try: 
+                found = line.index(number)
+                line[found] = "x"
+                if line == doneline:
+                    continue
+                    #print("Found one! Diagonal1 %s" % index)
+                    #return(index, number, markedboards[index])
+            except: pass
+        for index, line in enumerate(diagonals2):
+            try: 
+                found = line.index(number)
+                line[found] = "x"
+                if line == doneline:
+                    continue
+                    #print("Found one! Diagonal2 %s" % index)
+                    #return(index, number, markedboards[index])
+            except: pass
+            
 
 def findthing2(testrange):
     seekvalue = 0
@@ -37,45 +90,25 @@ def checkeverything(filename):
             board.append(re.split(" +",line.strip(" ")))
         boards.append(board)
 
-    diagonals1 = []
-    diagonals2 = []
-    for board in boards:
-        diagonals1.append(
-            [
-                board[0][0],
-                board[1][1],
-                board[2][2],
-                board[3][3],
-                board[4][4]
-            ])
-        diagonals2.append(
-            [
-                board[0][4],
-                board[1][3],
-                board[2][2],
-                board[3][1],
-                board[4][0]
-            ])
 
-    markedboards = list(boards)
+    winnerid, lastnum, winningboard = findwinner(boards,callednumbers)
+    print(winnerid, lastnum, winningboard)
 
-    for number in callednumbers:
-        for index, board in enumerate(markedboards):
-            for line in board:
-                try: 
-                    found = line.index(number)
-                    line[found] = "x"
-                except: pass
-
+    sumboard = 0
+    for line in winningboard:
+        for item in line:
+            if not(item == 'x'):
+                sumboard += int(item)
+    result1 = sumboard * int(lastnum)
 
     #    winnerid = findwinner(boards, callednumbers)
     #    result2 = findthing2(line)
     #    result3 = findgroup(line)
 
-    print(markedboards)
+    #print(markedboards)
     #print(diagonals1, diagonals2)
 
-    #print("Result %s" % result1)
+    print("Result %s" % result1)
     #print("Result %s" % result2)
     #print("Result %s" % result3)
 
