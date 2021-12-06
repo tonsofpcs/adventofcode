@@ -4,9 +4,10 @@ import copy
 
 print("importing")
 
-inputfile_source = os.path.dirname(__file__) + "/input.txt"
+inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
+maxsize = 10
 
-def inlinehv (point, path):
+def inlinehv(point, path):
     if (point[1] == path[0][1] == path[1][1]) and ((path[0][0] <= point[0] <= path[1][0]) or (path[0][0] >= point[0] >= path[1][0])):
         #print(point,path,"H")
         return(True)
@@ -16,11 +17,35 @@ def inlinehv (point, path):
     else:
         return(False)
 
-def findthing2(testrange):
-    seekvalue = 0
-    for item in testrange:
-        seekvalue = 1
-    return seekvalue
+def inline(point,path):
+    if inlinehv(point,path):
+        return True
+    xmin = min(path[0][0],path[1][0])
+    xmax = max(path[0][0],path[1][0])
+    ymin = min(path[0][1],path[1][1])
+    ymax = max(path[0][1],path[1][1])
+    #if not((path[0][0] <= point[0] <= path[1][0]) or (path[0][0] >= point[0] >= path[1][0])) and ((path[0][1] <= point[1] <= path[1][1]) or (path[0][1] >= point[1] >= path[1][1])):
+    #    return False #not in same square
+    #print(point)
+    if path[0][0] == xmax:
+        if path[0][1] == ymax:
+            if (path[0][0] - point[0]) == (path[0][1] - point[1]):
+                return True
+        else:
+            if (path[0][0] - point[0]) == xmax - (path[1][1] - point[1]):
+                return True
+    else:
+        if path[0][1] == ymax:
+            if (path[1][0] - point[0]) == -(path[1][1] - point[1]):
+                return True
+        else:
+            if (path[1][0] - point[1]) == (path[1][1] - point[0]):
+                print(path,point)
+                return True
+
+    #print("45 but not the right way?", point, path)
+    return False
+
 
 def findgroup(testgroup):
     return (findthing1(testgroup[1]) + findthing2(testgroup[2]))
@@ -34,9 +59,9 @@ def checkeverything(filename):
     hvpaths = []
 
     grid = []
-    for x in range(1000):
+    for x in range(maxsize):
         gridrow = []
-        for y in range(1000):
+        for y in range(maxsize):
             gridrow.append(0)
         grid.append(gridrow)
     #print(grid)
@@ -50,8 +75,8 @@ def checkeverything(filename):
     
     ge2 = 0
     item = 0
-    pathlen = len(hvpaths)
-    for path in hvpaths:
+    pathlen = len(paths)
+    for path in paths:
         item += 1
         print("%s of %s" % (item, pathlen))
         xmin = min(path[0][0],path[1][0])
@@ -60,7 +85,7 @@ def checkeverything(filename):
         ymax = max(path[0][1],path[1][1])
         for x in range(xmin, xmax+1):
             for y in range(ymin, ymax+1):
-                if inlinehv([x,y],path):
+                if inline([x,y],path):
                     grid[y][x] += 1
                     #print(x,y,grid[y][x])
                     if grid[y][x] == 2:
@@ -73,6 +98,6 @@ def checkeverything(filename):
     #print(hvpaths)
 
     print("Result %s" % ge2)
-    #print(grid)
+    print(grid)
 
 checkeverything(inputfile_source)
