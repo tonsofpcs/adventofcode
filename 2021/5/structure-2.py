@@ -4,21 +4,22 @@ import copy
 
 print("importing")
 
-inputfile_source = os.path.dirname(__file__) + "/input.txt"
+inputfile_source = os.path.dirname(__file__) + "/testinput2.txt"
 maxsize = 1000
 
 def inlinehv(point, path):
     if (point[1] == path[0][1] == path[1][1]) and ((path[0][0] <= point[0] <= path[1][0]) or (path[0][0] >= point[0] >= path[1][0])):
-        #print(point,path,"H")
+        print(path, point,"H")
         return(True)
     elif (point[0] == path[0][0] == path[1][0]) and ((path[0][1] <= point[1] <= path[1][1]) or (path[0][1] >= point[1] >= path[1][1])):
-        #print(point,path,"V")
+        print(path,point,"V")
         return(True)
     else:
         return(False)
 
 def inline(point,path):
     if inlinehv(point,path):
+        #print("HV", path,point)
         return True
     #xmin = min(path[0][0],path[1][0])
     xmax = max(path[0][0],path[1][0])
@@ -30,20 +31,21 @@ def inline(point,path):
     if path[0][0] == xmax:
         if path[0][1] == ymax:
             if (path[0][0] - point[0]) == (path[0][1] - point[1]):
+                print(path,point, "upleft")
                 return True
         else:
             if -(path[0][0] - point[0]) == (path[0][1] - point[1]):
+                print(path,point, "downleft")
                 return True
     else:
         if path[0][1] == ymax:
             if (path[1][0] - point[0]) == -(path[1][1] - point[1]):
+                print(path,point, "upright")
                 return True
         else:
             if (path[1][0] - point[1]) == (path[1][1] - point[0]):
-                #print(path,point)
+                print(path,point, "downright")
                 return True
-
-    #print("45 but not the right way?", point, path)
     return False
 
 def checkeverything(filename):
