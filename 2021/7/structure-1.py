@@ -7,7 +7,6 @@ import statistics
 print("importing")
 
 inputfile_source = os.path.dirname(__file__) + "/input.txt"
-costincrement = 3
 forcelocation = -1
 
 def cost_distance(distance):
@@ -26,33 +25,24 @@ def checkeverything(filename):
 
     crabs = list(map(int, inputdata[0].split(",")))
     maxcrabs = max(crabs)
-    #abstractcrabs = [0]*(maxcrabs+1)
-    
-    #crabsum = 0
 
-    #for index in range(maxcrabs+1):
-    #    abstractcrabs[index] = crabs.count(index)
-    #    crabsum += index * abstractcrabs[index]
-
-    print(statistics.median(crabs)) #crabsum*1.0/maxcrabs)
+    print(statistics.median(crabs))
     print(statistics.mean(crabs))
-    #averagecrab = int(crabsum/maxcrabs)
 
     if forcelocation == -1:
-        averagecrab = int(statistics.mean(crabs))
+        # averagecrab = int(statistics.median(crabs)) #part1
+        averagecrab = int(statistics.mean(crabs)) #part2
     else:
         averagecrab = forcelocation
 
     crabdistance = 0
     cost = 0
 
-    #for index, location in enumerate(abstractcrabs):
     for index in range(maxcrabs+1):
         crabdistance += abs(crabs.count(index)*(averagecrab - index))
         cost += abs(crabs.count(index)*cost_distance(averagecrab - index))
     
     print("Distance %s" % crabdistance)
     print("Cost %s" % cost)
-    #print("Result %s" % result3)
 
 checkeverything(inputfile_source)
