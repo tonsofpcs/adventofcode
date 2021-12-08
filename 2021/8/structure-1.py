@@ -169,7 +169,7 @@ def mapdata(dataset, numbermap):
         newitem = ''.join(newitem)
         # print(newitem)
         mapdataset.append(newitem)
-    # print("Map data: %s" % mapdataset)
+    print("Map data: %s" % mapdataset)
     return mapdataset
 
 def display(characterset):
@@ -184,18 +184,23 @@ def countem(whattocount):
         count += whattocount.count(item)
     return count
 
+def largenum(whattosum):
+    return whattosum[0]*1000+whattosum[1]*100+whattosum[2]*10+whattosum[3]
+
 def checkeverything(filename):
     inputfile = open(filename)
     inputfiledata = inputfile.read()
     inputdata = inputfiledata.split("\n")
 
     countthem = 0
+    sumthem = 0
 
     for line in inputdata:
         dataset,raw = readline(line)
         numbermap = findnumbers(dataset)
         nums = display(mapdata(raw, numbermap))
         countthem += countem(nums)
+        sumthem += largenum(nums)
 
         # lenset = []
         # for line in dataset:
@@ -208,5 +213,6 @@ def checkeverything(filename):
         print("Display: %s" % nums)
    
     print("Count : %s" % countthem)
+    print("Sum : %s" % sumthem)
 
 checkeverything(inputfile_source)
