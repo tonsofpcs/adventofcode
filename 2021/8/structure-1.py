@@ -37,6 +37,16 @@ def possiblecontain(possibilities, searchfor):
     # find = possibilities.find(searchfor)
     # return (find != -1)
 
+def possiblecontainall(possibilities, containin):
+    # print("Testall %s : %s" % (containin, possibilities))
+    result = True
+    for item in possibilities:
+        test = (containin.find(item) != -1)
+        result = result & test
+    return result
+
+
+
 def findnumbers(dataset):
     wirepossibilities = ["abcdefg"]*7
     for wireset in dataset:
@@ -106,7 +116,7 @@ def findnumbers(dataset):
                         wirepossibilities[wireid] = possiblekeep(wirepossibilities[wireid],wireset)
                     # elif wireid == 3:  #already there if we matched
                     #     wirepossibilities[wireid] = possibleremove(wirepossibilities[wireid],wireset)
-            elif not possiblecontain(wirepossibilities[2],wireset): #SIX
+            elif not possiblecontainall(wirepossibilities[2],wireset): #SIX #wirepossibilities 2 and 5 should match until this point
                 print("Six! %s" % wireset)
                 for wireid in range(7):
                     if wireid in [0,1,3,4,5,6]:
@@ -122,6 +132,8 @@ def findnumbers(dataset):
                     #     wirepossibilities[wireid] = possibleremove(wirepossibilities[wireid],wireset)
             else:
                 print("Six wires but inconclusive. %s : %s" % (wireset, wirepossibilities))
+    # check if any are single characters, remove from others
+
     return wirepossibilities
 
 
@@ -129,8 +141,8 @@ def readline(line):
     fulldataset = []
     rawoutput = []
     rawoutput = line[line.find("|")+2:].split(" ")
-    fulldataset = line.split(" ")
-    fulldataset.remove('|')
+    fulldataset = line.split(" ")[:10] #the first 10
+    #fulldataset.remove('|')
     return fulldataset, rawoutput
 
 def checkeverything(filename):
@@ -140,6 +152,7 @@ def checkeverything(filename):
 
     for line in inputdata:
         dataset,raw = readline(line)
+        dataset.sort(key=len)
         numbermap = findnumbers(dataset)
 
         lenset = []
