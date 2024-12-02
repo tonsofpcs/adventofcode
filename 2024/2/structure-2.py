@@ -6,10 +6,10 @@ print("importing")
 
 inputfile_source = os.path.dirname(__file__) + "/input.txt"
 
-def findthing1(testrange):
-    testrange = testrange.split(" ")
+def findthing1(testrange, debugmode = False):
     testvalue = -1
     testdirection = 0
+    badlevels = 0
     for itemstr in testrange:
         item = int(itemstr)
         if not(testvalue == -1):
@@ -19,23 +19,27 @@ def findthing1(testrange):
                 elif (item - testvalue) < 0:
                     testdirection = -1
                 else:
-                    print("Unsafe due to nochange:  ", testrange, testvalue, item, (item - testvalue), testdirection)
-                    return 0 # unsafe
+                    if debugmode: print("Unsafe due to nochange:  ", testrange, testvalue, item, (item - testvalue), testdirection)
+                    return 0
             else:
                 if not ((item - testvalue) > 0 and testdirection == 1) and not ((item - testvalue) < 0 and testdirection == -1):
-                    print("Unsafe due to direction: ", testrange, testvalue, item, (item - testvalue), testdirection)
-                    return 0 #unsafe
+                    if debugmode: print("Unsafe due to direction: ", testrange, testvalue, item, (item - testvalue), testdirection)
+                    return 0
             if abs(item - testvalue) > 3:
-                print("Unsafe due to >3:        ", testrange, testvalue, item, (item - testvalue), testdirection)
-                return 0 # unsafe
+                if debugmode: print("Unsafe due to >3:        ", testrange, testvalue, item, (item - testvalue), testdirection)
+                return 0
         testvalue = item
     return 1
 
 def findthing2(testrange):
-    seekvalue = 0
-    for item in testrange:
-        seekvalue = 1
-    return seekvalue
+    for indexvalue in range(len(testrange)):
+        testrangecopy = testrange.copy()
+        del testrangecopy[indexvalue]
+        result = findthing1(testrangecopy, True)
+        if result == 1:
+            print("Safe", testrange, testrangecopy)
+            return 1
+    return 0
 
 def findgroup(testgroup):
     return (findthing1(testgroup[1]) + findthing2(testgroup[2]))
@@ -46,9 +50,12 @@ def checkeverything(filename):
     inputdata = inputfiledata.split("\n")
     result1 = 0
     for line in inputdata:
-        result1 += findthing1(line)
-        # result2 = findthing2(line)
-        # result3 = findgroup(line)
+        result = findthing1(line.split(" "))
+        if result == 1:
+            result1 += 1
+        else: 
+            #try all the options
+            result1 += findthing2(line.split(" "))
     print("Result %s" % result1)
     # print("Result %s" % result2)
     # print("Result %s" % result3)
