@@ -31,11 +31,15 @@ def findvalues(testrange):
     # print(seekvalue)
     return seekvalue
 
-    
-
 def processvalues(testrange):
     # multiply values
     return testrange[0] * testrange[1]
+
+def removedont(testrange):
+    doit = []
+    for item in testrange:
+        doit.append(item.split("don't()")[0])
+    return doit
 
 def checkeverything(filename):
     inputfile = open(filename)
@@ -44,7 +48,10 @@ def checkeverything(filename):
         offset = 0
     else:
         offset = 1
-    inputdata = inputfiledata.split("mul")
+    inputdata_do = inputfiledata.split("do()")
+    inputdata_do = removedont(inputdata_do)
+    inputdata_do = ''.join(inputdata_do)
+    inputdata = inputdata_do.split("mul")
     if offset == 1:
         del inputdata[0]
     multipliers = [0,0]
