@@ -1,36 +1,54 @@
 #!/usr/bin/python
 import os
 import copy
+import math
 
-print("importing")
+debugmode = False
+if debugmode: print("importing")
 
-inputfile_source = os.path.dirname(__file__) + "/input.txt"
+def rotateright(starting):
+    if starting == [-1,0]: return [0,1]
+    elif starting == [0,1]: return [1,0]
+    elif starting == [1,0]: return [0,-1]
+    elif starting == [0,-1]: return [-1,0]
+    else: 
+        print("ERROR TURNING THE GUARD")
+        return [1,1]
 
-def findthing1(testrange):
-    seekvalue = 0
-    for item in testrange:
-        seekvalue = 1
-    return seekvalue
-
-def findthing2(testrange):
-    seekvalue = 0
-    for item in testrange:
-        seekvalue = 1
-    return seekvalue
-
-def findgroup(testgroup):
-    return (findthing1(testgroup[1]) + findthing2(testgroup[2]))
+inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
 
 def checkeverything(filename):
     inputfile = open(filename)
     inputfiledata = inputfile.read()
     inputdata = inputfiledata.split("\n")
-    for line in inputdata:
-        result1 = findthing1(line)
-        result2 = findthing2(line)
-        result3 = findgroup(line)
-    print("Result %s" % result1)
-    print("Result %s" % result2)
-    print("Result %s" % result3)
-
-checkeverything(inputfile_source)
+    direction = [-1,0]
+    visited = inputdata.copy()
+    if "^" in inputfiledata:
+        if debugmode: print("Yay! A guard!")
+        guardlocation = inputfiledata.index("^")
+        if debugmode: print("Guard at:", guardlocation)
+        width = len(inputdata[0])
+        height = len(inputdata)
+        if debugmode: print("Size:", width, height)
+        guardrow = int(math.floor(guardlocation/(width + 1)))  # + 1 to account for \n
+        guardcol = int(guardlocation - guardrow * (width + 1))
+        guardxy = [guardcol, guardrow]
+        if debugmode: print(inputdata[guardrow][guardcol]," at ", guardxy)
+        while True:
+            visited[guardrow] = visited[guardrow][:guardcol] + 'X' + visited[guardrow][guardcol+1:]
+            nextrow = guardrow + direction[0]
+            nextcol = guardcol + direction[1]
+            if nextcol < 0 or nextrow < 0 or nextcol >= width or nextrow >= height:
+                break
+            if debugmode: print("Next: ",nextrow,", ", nextcol)
+            if inputdata[nextrow][nextcol] == "#":
+                direction = rotateright(direction)
+            guardrow += direction[0]
+            guardcol += direction[1]
+        endmap = '\n'.join(visited)
+        print(endmap)
+        return endmap.count("X")
+    else:
+        return "Error, Guard not found."
+    
+print(checkeverything(inputfile_source))
