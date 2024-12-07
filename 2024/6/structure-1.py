@@ -15,7 +15,7 @@ def rotateright(starting):
         print("ERROR TURNING THE GUARD")
         return [1,1]
 
-inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
+inputfile_source = os.path.dirname(__file__) + "/input.txt"
 
 def checkeverything(filename):
     inputfile = open(filename)
