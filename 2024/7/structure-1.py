@@ -3,10 +3,10 @@ import os
 import copy
 import math
 
-debugmode = True
+debugmode = False
 if debugmode: print("importing")
 
-inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
+inputfile_source = os.path.dirname(__file__) + "/input.txt"
 
 def findthing1(testrange):
     if debugmode: print("Test range:", testrange)
@@ -18,9 +18,11 @@ def findthing1(testrange):
     if fullsum == result or fullmult == result:
         if debugmode: print("Full sum or mult matched")
         return result
-    elif (fullsum < result and fullmult < result) or fullsum > result:
-        if debugmode: print("Not in range")
-        return 0
+    # don't get too smart
+    #
+    # elif (fullsum < result and fullmult < result) or fullsum > result:
+    #     if debugmode: print("Not in range")
+    #     return 0
     else:
         # ok let's do some math
         if debugmode: print(len(operands), " operands")
