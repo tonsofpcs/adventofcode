@@ -20,7 +20,7 @@ def checkeverything(filename):
     inputfiledata = inputfile.read()
     inputdata = inputfiledata.split(" ")
     newdata = inputdata.copy()
-    for iter in range(1,25+1):
+    for iter in range(1,75+1):
         olddata = newdata.copy()
         newdata = []
         for item in olddata:
