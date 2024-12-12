@@ -2,7 +2,7 @@
 import os
 import copy
 
-debugmode = True
+debugmode = False
 if debugmode: print("importing")
 
 inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
@@ -20,7 +20,7 @@ def checkeverything(filename):
     inputfiledata = inputfile.read()
     inputdata = inputfiledata.split(" ")
     newdata = inputdata.copy()
-    for iter in range(1,6+1):
+    for iter in range(1,25+1):
         olddata = newdata.copy()
         newdata = []
         for item in olddata:
