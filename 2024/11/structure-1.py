@@ -2,10 +2,10 @@
 import os
 import copy
 
-debugmode = False
+debugmode = True
 if debugmode: print("importing")
 
-inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
+inputfile_source = os.path.dirname(__file__) + "/input.txt"
 
 def findthing1(testnum):
     if testnum == "0":
@@ -25,7 +25,8 @@ def checkeverything(filename):
         newdata = []
         for item in olddata:
             newdata = newdata + findthing1(item)
-        if debugmode: print("Iteration ", iter, " : ", newdata)
+        # if debugmode: print("Iteration ", iter, " : ", newdata)
+        if debugmode: print("Iteration:", iter)
     return len(newdata)
 
 print(checkeverything(inputfile_source))
