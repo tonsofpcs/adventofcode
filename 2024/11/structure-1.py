@@ -7,32 +7,25 @@ if debugmode: print("importing")
 
 inputfile_source = os.path.dirname(__file__) + "/testinput.txt"
 
-def findthing1(testrange):
-    seekvalue = 0
-    for item in testrange:
-        seekvalue = 1
-    return seekvalue
-
-def findthing2(testrange):
-    seekvalue = 0
-    for item in testrange:
-        seekvalue = 1
-    return seekvalue
-
-def findgroup(testgroup):
-    return (findthing1(testgroup[1]) + findthing2(testgroup[2]))
+def findthing1(testnum):
+    if testnum == "0":
+        return ["1"]
+    if len(testnum) % 2 == 0: # even
+        split = int(len(testnum)/2)
+        return[testnum[0:split], testnum[split:]]
+    return [str(int(testnum)*2024)]
 
 def checkeverything(filename):
     inputfile = open(filename)
     inputfiledata = inputfile.read()
-    inputdata = inputfiledata.split("\n")
-    for line in inputdata:
-        result1 = findthing1(line)
-        result2 = findthing2(line)
-        result3 = findgroup(line)
-    if debugmode: print("Result %s" % result1)
-    if debugmode: print("Result %s" % result2)
-    if debugmode: print("Result %s" % result3)
-    return result3
+    inputdata = inputfiledata.split(" ")
+    newdata = inputdata.copy()
+    for iter in range(1,6+1):
+        olddata = newdata.copy()
+        newdata = []
+        for item in olddata:
+            newdata = newdata + findthing1(item)
+        if debugmode: print("Iteration ", iter, " : ", newdata)
+    return len(newdata)
 
 print(checkeverything(inputfile_source))
