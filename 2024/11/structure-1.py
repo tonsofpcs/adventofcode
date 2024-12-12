@@ -12,7 +12,7 @@ def findthing1(testnum):
         return ["1"]
     if len(testnum) % 2 == 0: # even
         split = int(len(testnum)/2)
-        return[testnum[0:split], testnum[split:]]
+        return[testnum[0:split], str(int(testnum[split:]))] # str(int()) to remove leading zeros
     return [str(int(testnum)*2024)]
 
 def checkeverything(filename):
